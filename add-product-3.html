@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maison — Enter Product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal:   #1a1a1a;
+      --warm-white: #faf9f7;
+      --cream:      #f2efe9;
+      --mid:        #8a8680;
+      --accent:     #c9a96e;
+      --border:     #e8e4de;
+      --error:      #c0392b;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: var(--warm-white);
+      color: var(--charcoal);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.8rem 4rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--warm-white);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--charcoal);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--charcoal); }
+
+    /* ── Page Title ── */
+    .page-hero {
+      padding: 4rem 4rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+
+    .page-hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .page-hero p {
+      margin-top: 1.2rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ── Form Container ── */
+    .form-container {
+      flex: 1;
+      padding: 3rem 4rem 6rem;
+      max-width: 720px;
+    }
+
+    /* ── Form Groups ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 3rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .form-group label span.required {
+      color: var(--accent);
+      margin-left: 0.2rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--charcoal);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .form-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8680' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      padding-right: 1.5rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.6;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-bottom-color: var(--charcoal);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--border);
+      font-size: 0.8rem;
+    }
+
+    /* ── Helper text ── */
+    .field-hint {
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+      margin-top: -0.2rem;
+    }
+
+    /* ── Section divider ── */
+    .form-section-label {
+      grid-column: 1 / -1;
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Submit button ── */
+    .form-actions {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1rem 2.8rem;
+      background: var(--charcoal);
+      color: var(--warm-white);
+      border: 1px solid var(--charcoal);
+      font-family: inherit;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: transparent;
+      color: var(--charcoal);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-submit .spinner {
+      width: 12px;
+      height: 12px;
+      border: 1.5px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: 0.7; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .btn-cancel {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-cancel:hover { color: var(--charcoal); }
+
+    /* ── Success overlay ── */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(250, 249, 247, 0.96);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .success-overlay.visible {
+      display: flex;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+
+    .success-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .success-subtitle {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .success-redirect {
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: 0.5rem;
+    }
+
+    .success-redirect span {
+      color: var(--accent);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-top: auto;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      header { padding: 1.5rem; }
+      .page-hero { padding: 2.5rem 1.5rem 1.5rem; }
+      .form-container { padding: 2rem 1.5rem 4rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+      .form-group.full-width { grid-column: 1; }
+      .form-section-label { grid-column: 1; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Success Overlay ── -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5">
+      <polyline points="4 11 9 16 18 6"/>
+    </svg>
+  </div>
+  <h2 class="success-title">Product<br /><em>Submitted</em></h2>
+  <p class="success-subtitle">Your item has been added to the collection</p>
+  <p class="success-redirect">Returning to shop in <span id="countdown">3</span>s…</p>
+</div>
+
+<header>
+  <a href="index.html" class="logo">Maison</a>
+  <a href="index.html" class="back-link">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3">
+      <polyline points="7 2 3 6 7 10"/>
+    </svg>
+    Back to shop
+  </a>
+</header>
+
+<div class="page-hero">
+  <h1>Enter<br /><em>Product</em></h1>
+  <p>Add a new item to the Spring / Summer 2026 collection</p>
+</div>
+
+<div class="form-container">
+  <div class="form-grid" id="productForm">
+
+    <!-- Section: Product Info -->
+    <div class="form-section-label">Product Information</div>
+
+    <!-- Name (Col A) -->
+    <div class="form-group full-width">
+      <label>Product Name <span class="required">*</span></label>
+      <input
+        type="text"
+        id="field-name"
+        name="name"
+        placeholder="e.g. Silk Midi Dress"
+        required
+        autocomplete="off"
+      />
+    </div>
+
+    <!-- Category (Col B) -->
+    <div class="form-group">
+      <label>Category <span class="required">*</span></label>
+      <input
+        type="text"
+        id="field-category"
+        name="category"
+        placeholder="e.g. Women, Men, Accessories"
+        required
+        autocomplete="off"
+      />
+      <span class="field-hint">Displayed on the product card</span>
+    </div>
+
+    <!-- Tag (Col C) — used for filtering -->
+    <div class="form-group">
+      <label>Filter Tag <span class="required">*</span></label>
+      <select id="field-tag" name="tag" required>
+        <option value="" disabled selected>Select a tag</option>
+        <option value="women">Women</option>
+        <option value="men">Men</option>
+        <option value="accessories">Accessories</option>
+      </select>
+      <span class="field-hint">Controls which filter pill shows this product</span>
+    </div>
+
+    <!-- Section: Pricing & Badge -->
+    <div class="form-section-label">Pricing &amp; Status</div>
+
+    <!-- Price (Col D) -->
+    <div class="form-group">
+      <label>Price (USD) <span class="required">*</span></label>
+      <input
+        type="number"
+        id="field-price"
+        name="price"
+        placeholder="e.g. 285"
+        min="0"
+        step="0.01"
+        required
+      />
+    </div>
+
+    <!-- Badge (Col E) -->
+    <div class="form-group">
+      <label>Badge</label>
+      <select id="field-badge" name="badge">
+        <option value="">None</option>
+        <option value="New">New</option>
+        <option value="Sale">Sale</option>
+      </select>
+      <span class="field-hint">"Sale" renders in gold; "New" renders in dark</span>
+    </div>
+
+    <!-- Section: Media -->
+    <div class="form-section-label">Media</div>
+
+    <!-- Image URL (Col F) -->
+    <div class="form-group full-width">
+      <label>Image URL <span class="required">*</span></label>
+      <input
+        type="url"
+        id="field-image"
+        name="image"
+        placeholder="https://example.com/image.jpg"
+        required
+        autocomplete="off"
+      />
+      <span class="field-hint">Direct link to a publicly accessible image (JPG, PNG, WebP)</span>
+    </div>
+
+  </div><!-- /form-grid -->
+
+  <div class="form-actions">
+    <button type="button" class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+      <span class="spinner" id="spinner"></span>
+      <span class="btn-text">Submit Product</span>
+    </button>
+    <a href="index.html" class="btn-cancel">Cancel</a>
+  </div>
+
+</div><!-- /form-container -->
+
+<footer>
+  <span>© 2026 Maison</span>
+  <span>Free shipping on orders over $150</span>
+</footer>
+
+<script>
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Replace the placeholder below with your Google Apps Script Web App URL.
+  // In Apps Script: Deploy → New Deployment → Web App → Execute as: Me → Anyone
+  // ─────────────────────────────────────────────────────────────────────────────
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzwiIhK_uoWhNBTDxocyVL7pWxesq_q6Of4js5u2GQfPvqzEMFn0BHjaujpvPn63H3CUw/exec";
+
+  // ─── Field IDs → URL param names (must match Google Sheet column headers) ───
+  // Col A: name  |  Col B: category  |  Col C: tag
+  // Col D: price |  Col E: badge     |  Col F: image
+  const FIELDS = [
+    { id: "field-name",     param: "name"     },
+    { id: "field-category", param: "category" },
+    { id: "field-tag",      param: "tag"      },
+    { id: "field-price",    param: "price"    },
+    { id: "field-badge",    param: "badge"    },
+    { id: "field-image",    param: "image"    },
+  ];
+
+  function validateForm() {
+    const requiredIds = ["field-name", "field-category", "field-tag", "field-price", "field-image"];
+    for (const id of requiredIds) {
+      const el = document.getElementById(id);
+      if (!el || !el.value.trim()) {
+        el && el.focus();
+        el && (el.style.borderBottomColor = "var(--error)");
+        setTimeout(() => { el && (el.style.borderBottomColor = ""); }, 2000);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function setLoadingState(loading) {
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = loading;
+    if (loading) {
+      btn.classList.add("loading");
+      btn.querySelector(".btn-text").textContent = "Submitting…";
+    } else {
+      btn.classList.remove("loading");
+      btn.querySelector(".btn-text").textContent = "Submit Product";
+    }
+  }
+
+  function showSuccess() {
+    const overlay = document.getElementById("successOverlay");
+    overlay.classList.add("visible");
+
+    // Countdown & auto-redirect
+    let count = 3;
+    const countEl = document.getElementById("countdown");
+    const interval = setInterval(() => {
+      count--;
+      countEl.textContent = count;
+      if (count <= 0) {
+        clearInterval(interval);
+        window.location.href = "index.html";
+      }
+    }, 1000);
+  }
+
+  async function handleSubmit() {
+    if (!validateForm()) return;
+
+    setLoadingState(true);
+
+    // Build URL params matching the Google Sheet variable names
+    const params = new URLSearchParams();
+    for (const field of FIELDS) {
+      const el = document.getElementById(field.id);
+      params.append(field.param, el ? el.value.trim() : "");
+    }
+
+    try {
+      const url = `${WEB_APP_URL}?${params.toString()}`;
+      const response = await fetch(url, { method: "GET", mode: "no-cors" });
+
+      // With mode: "no-cors", response is opaque — we assume success if no exception thrown
+      setLoadingState(false);
+      showSuccess();
+
+    } catch (err) {
+      console.error("Submission error:", err);
+      setLoadingState(false);
+      // Show inline error message
+      const actions = document.querySelector(".form-actions");
+      let errorEl = document.getElementById("submit-error");
+      if (!errorEl) {
+        errorEl = document.createElement("p");
+        errorEl.id = "submit-error";
+        errorEl.style.cssText = `
+          font-size:0.62rem;
+          letter-spacing:0.15em;
+          text-transform:uppercase;
+          color:var(--error);
+          margin-top:1rem;
+          grid-column:1/-1;
+        `;
+        actions.insertAdjacentElement("afterend", errorEl);
+      }
+      errorEl.textContent = "⚠ Submission failed. Check your Web App URL and try again.";
+      setTimeout(() => { errorEl && (errorEl.textContent = ""); }, 5000);
+    }
+  }
+
+  // Clear red border on input
+  document.querySelectorAll("input, select, textarea").forEach(el => {
+    el.addEventListener("input", () => { el.style.borderBottomColor = ""; });
+    el.addEventListener("change", () => { el.style.borderBottomColor = ""; });
+  });
+
+  // Allow Enter key to submit from any input
+  document.addEventListener("keydown", e => {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      handleSubmit();
+    }
+  });
+</script>
+</body>
+</html>
